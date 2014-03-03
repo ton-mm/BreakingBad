@@ -17,6 +17,8 @@ public class Breakingbad {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        programa juego = new programa();
+        juego.setVisible(true);
     }
     
 }
