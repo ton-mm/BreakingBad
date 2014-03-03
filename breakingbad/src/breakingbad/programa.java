@@ -46,7 +46,8 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
     private SoundClip bomb;    //Objeto AudioClip
     private SoundClip teleport;
     private Bueno pelota;    // Objeto de la clase Bueno
-    private Malo caja;    //Objeto de la clase Malo
+    private Malo barra;    //Objeto de la clase Malo
+    private bloques bloque; // bloques
     private int ancho;  //Ancho del elefante
     private int alto;   //Alto del elefante
     private ImageIcon elefante; // Imagen del elefante.
@@ -59,11 +60,11 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
     private boolean pausa = false;
     private boolean clic = false; //para saber cuando hace clic
     private boolean up,down,right,left; //movimiento de teclado
-    private boolean pchoco; // bool pelota choco
+    private boolean pchocox,pchocoy; // bool pelota choco
     private double angulo; // angulo de la pelota
     private double px,py; // posicion de la pelota con formula
     private int intentos;
-    private double velocidadx,velocidady;
+    private int velocidadx,velocidady;
     private double gravedad = 9.8;
     private double tiempo;
     private boolean btiempo;
@@ -101,15 +102,15 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         this.setSize(1000, 700);
         URL eURL = this.getClass().getResource("Imagenes/bola.png");
         int dposy = getHeight() / 2 + getHeight() / 8;
-        pelota = new Bueno(15, dposy , Toolkit.getDefaultToolkit().getImage(eURL));
+        pelota = new Bueno(getWidth()/2, getHeight() - 100, Toolkit.getDefaultToolkit().getImage(eURL));
         //pelota.setPosX((int) (getWidth()/2));
         //pelota.setPosY(getHeight());
         int posrX =  getWidth()/2 ;    //posision x es tres cuartos del applet
         int posrY =   getHeight() ;  //posision y es tres cuartos del applet
-        URL rURL = this.getClass().getResource("Imagenes/caja.png");
-        caja = new Malo(posrX, posrY, Toolkit.getDefaultToolkit().getImage(rURL));
-        caja.setPosX(caja.getPosX() - caja.getAncho());
-        caja.setPosY(caja.getPosY() - caja.getAlto());
+        URL rURL = this.getClass().getResource("Imagenes/barra.png");
+        barra = new Malo(posrX, posrY, Toolkit.getDefaultToolkit().getImage(rURL));
+        barra.setPosX(barra.getPosX() - barra.getAncho()/2);
+        barra.setPosY(barra.getPosY() - barra.getAlto());
         setBackground(Color.white);
         addKeyListener(this);
         URL goURL = this.getClass().getResource("Imagenes/perder.png");
@@ -123,17 +124,10 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         elefante = new ImageIcon(Toolkit.getDefaultToolkit().getImage(eURL));
         ancho = elefante.getIconWidth();
         alto = elefante.getIconHeight();
-        //ancho2 = caja.getIconWidth();
-        // alto2 = caja.getIconHeight();
+        //ancho2 = barra.getIconWidth();
+        // alto2 = barra.getIconHeight();
         addMouseListener(this);
         addMouseMotionListener(this); 
-        
-        // variable de la pelota
-        angulo = (int) ((Math.random() * (60 - 45)) + 45);
- 
-        //movimiento de pelota en x
-        velocidad = (int) ((Math.random() * (6 - 4)) + 4);
-        
         
         
         //movimiento de pelota en y
@@ -192,54 +186,55 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         {
             if(clic)
             {
-            
-                velocidadx =  velocidad * (Math.sin(Math.toRadians(angulo)));
-        
-                //velocidad de y
-                velocidady = -velocidad + 2.5 * tiempo;
+                //movimiento de pelota en x
+                velocidadx = 5;
+                velocidady = 5;
+                
             
                 //boolean para tiempo
                 btiempo = true;
-            
-                //actualziacion de posicion
-                pelota.setPosX(pelota.getPosX() + (int) velocidadx);
-                pelota.setPosY(pelota.getPosY() + (int) velocidady);
+                clic = false;
             } 
         }
         
-        
-        
-        
-        
         if(left)
         {
-            caja.setPosX(caja.getPosX() - 5);
+            barra.setPosX(barra.getPosX() - 10);
             left = false;
         }
         else if(right)
         {
-            caja.setPosX(caja.getPosX() + 5);
+            barra.setPosX(barra.getPosX() + 10);
             right = false;
         }
         
         //si choca con la ventana se invierte la velocidad en X
-        if(pchoco)
+        if(pchocox)
         {
-            px *= -1;
-            pchoco = false;
+            velocidadx *= -1;
+            pchocox = false;
         }
         
-        
-        
-        
-        //limita el movimiento de la caja 
-        if(caja.getPosX() <= getWidth()/3)
+        if(pchocoy)
         {
-            caja.setPosX(getWidth()/3);
+            velocidady *= -1;
+            pchocoy = false;
         }
-        if(caja.getPosX() + caja.getAncho() >= getWidth())
+        
+        pelota.setPosX(pelota.getPosX() + velocidadx);
+        pelota.setPosY(pelota.getPosY() + velocidady);
+        
+        
+        
+        
+        //limita el movimiento de la barra 
+        if(barra.getPosX() <= 0)
         {
-            caja.setPosX(getWidth() - caja.getAncho());
+            barra.setPosX(0);
+        }
+        if(barra.getPosX() + barra.getAncho() >= getWidth())
+        {
+            barra.setPosX(getWidth() - barra.getAncho());
         }
     
  }
@@ -252,62 +247,29 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
        
         if(pelota.getPosX() + pelota.getAncho() >= getWidth() || pelota.getPosX() <= 0)
         {
-            pchoco = true;
+            pchocox = true;
         }
         
         
-         if (pelota.getPosX() + pelota.getAncho() >= getWidth()) {
-            int posrX = (int) (0);    // posicion en x es un cuarto del applet
-            int posrY = (int) (getHeight() / 2 + getHeight() / 8);    // posicion en y es un cuarto del applet
-            pelota.setPosX(posrX);
-            pelota.setPosY(posrY);
-            btiempo = false;
-            tiempo = 0;
-            clic = false;
-            // variable de la pelota
-            angulo = (int) ((Math.random() * (60 - 45)) + 45);
- 
-            //movimiento de pelota en x
-            velocidad = (int) ((Math.random() * (6 - 4)) + 4);
+         if (pelota.getPosX() + pelota.getAncho() >= getWidth()) 
+         {
             
-            // sonido de buuu
-            buuu.play();
+            pchocox = true;
+       
         }
         if (pelota.getPosY() + pelota.getAlto() >= getHeight()) {
-            int posrX = (int) (0);    // posicion en x es un cuarto del applet
-            int posrY = (int) (getHeight() / 2 + getHeight() / 8);    // posicion en y es un cuarto del applet
-            pelota.setPosX(posrX);
-            pelota.setPosY(posrY);
-            intentos++;
-            btiempo = false;
-            tiempo = 0;
-            clic = false;
-            // variable de la pelota
-            angulo = (int) ((Math.random() * (60 - 45)) + 45);
- 
-            //movimiento de pelota en x
-            velocidad = (int) ((Math.random() * (6 - 4)) + 4);
+            pchocoy = true;
             
-            // sonido de buuu
-            buuu.play();
         }
         
-         if (pelota.intersecta(caja) && (pelota.getPosY() + pelota.getAlto() - 5) < caja.getPosY()) {
-            int posrX = (int) (0);    // posicion en x es un cuarto del applet
-            int posrY = (int) (getHeight() / 2 + getHeight() / 8);    // posicion en y es un cuarto del applet
-            pelota.setPosX(posrX);
-            pelota.setPosY(posrY);
-            score += 2;
-            btiempo = false;
-            tiempo = 0;
-            clic = false;
-            // variable de la pelota
-            angulo = (int) ((Math.random() * (60 - 45)) + 45);
- 
-            //movimiento de pelota en x
-            velocidad = (int) ((Math.random() * (6 - 4)) + 4);
-            //sonido de yay
-            yay.play();
+        if (pelota.getPosY() <= 0) {
+            pchocoy = true;
+            
+        }
+        
+         if (pelota.intersecta(barra) && (pelota.getPosY() + pelota.getAlto() - 5) <= barra.getPosY()) {
+            pchocoy = true;
+           
         }
    
     }
@@ -334,10 +296,10 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
     
     public void paint1(Graphics g) {
         if (vidas>0){
-        if (pelota != null && caja != null) {
+        if (pelota != null && barra != null) {
             //Dibuja la imagen en la posicion actualizada
             g.drawImage(pelota.getImagenI(), pelota.getPosX(), pelota.getPosY(), this);
-            g.drawImage(caja.getImagenI(), caja.getPosX(), caja.getPosY(), this);
+            g.drawImage(barra.getImagenI(), barra.getPosX(), barra.getPosY(), this);
  
         } else {
             //Da un mensaje mientras se carga el dibujo
@@ -349,7 +311,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         }
    
         //
-        g.drawImage(caja.getImagenI(), caja.getPosX(), caja.getPosY(), this);
+        g.drawImage(barra.getImagenI(), barra.getPosX(), barra.getPosY(), this);
         
         
         g.setColor(Color.black);
@@ -361,14 +323,14 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         
         /*if (pausa) {
                     g.setColor(Color.white);
-                    g.drawString(caja.getpausado(), caja.getPosX() + caja.getAncho() / 3, caja.getPosY() + caja.getAlto() / 2);
+                    g.drawString(barra.getpausado(), barra.getPosX() + barra.getAncho() / 3, barra.getPosY() + barra.getAlto() / 2);
                 }
         */
                 if (instrucciones ) {
                 
                g.setColor(Color.black);
                g.drawString("INSTRUCCIONES: Para empezar el juego dar click a la pelota. Intenta cachar", 200, 200); 
-                    g.drawString(    "la pelota con la caja. Mueve la caja con las flechas IZQ y DER", 200, 212); 
+                    g.drawString(    "la pelota con la barra. Mueve la barra con las flechas IZQ y DER", 200, 212); 
                      g.drawString(   "Para pausar el juego presiona 'p' ", 200, 225); 
                      g.drawString(   "Para guardar el juego presiona 'g'", 200, 238); 
                     g.drawString(    "Para cargar el juego presiona 'c'  ", 200, 250); 
@@ -395,16 +357,16 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
                 }
                 String dato = fileIn.readLine();
                 arr = dato.split (",");
-                velocidadx = (Double.parseDouble(arr[0]));
-                velocidady = (Double.parseDouble(arr[1]));
+                velocidadx = (Integer.parseInt(arr[0]));
+                velocidady = (Integer.parseInt(arr[1]));
                 angulo = (Double.parseDouble(arr[2]));
                 tiempo = (Double.parseDouble(arr[3]));
                 vidas = (Integer.parseInt(arr[4]));
                 //dificultad = (Double.parseDouble(arr[5]));
                 pelota.setPosX((Integer.parseInt(arr[5])));
                 pelota.setPosY((Integer.parseInt(arr[6])));
-                caja.setPosX((Integer.parseInt(arr[7])));
-                caja.setPosY((Integer.parseInt(arr[8])));
+                barra.setPosX((Integer.parseInt(arr[7])));
+                barra.setPosY((Integer.parseInt(arr[8])));
                 //perdida = (Integer.parseInt(arr[10]));
                 //pico = (Boolean.parseBoolean(arr[11]));
                 
@@ -419,8 +381,8 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
               //dificultad = 0;
               pelota.setPosX(0);
               pelota.setPosY(0);
-              caja.setPosX(0);
-              caja.setPosY(0);
+              barra.setPosX(0);
+              barra.setPosY(0);
               //perdida = 0;
               //pico = false;
               
@@ -439,7 +401,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
             
             
             PrintWriter fileOut = new PrintWriter(new FileWriter(nombreArchivo));
-            fileOut.println(""+velocidadx+","+velocidady+","+angulo+","+tiempo+","+vidas+","+pelota.getPosX()+","+pelota.getPosY()+","+caja.getPosX()+","+caja.getPosY());
+            fileOut.println(""+velocidadx+","+velocidady+","+angulo+","+tiempo+","+vidas+","+pelota.getPosX()+","+pelota.getPosY()+","+barra.getPosX()+","+barra.getPosY());
             fileOut.close();
            
            // guardar = false;
