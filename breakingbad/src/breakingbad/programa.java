@@ -138,16 +138,14 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         // lista de bloques
         for(int k = 0; k < 13; k++)
         {
-            URL aURL = this.getClass().getResource("Imagenes/brick.png");
-            bloque = new bloques(30 + 70 * k, 70, Toolkit.getDefaultToolkit().getImage(aURL));
-            //bloque.setPosX(bloque.getPosX() - bloque.getAncho());
-            //bloque.setPosY(bloque.getPosY() - bloque.getAlto());
-            lista.addLast(bloque);
+            for(int i = 0; i < 5 ; i++)
+            {
+               URL aURL = this.getClass().getResource("Imagenes/brick.png");
+                bloque = new bloques(30 + 70 * k, i * 30 + 70, Toolkit.getDefaultToolkit().getImage(aURL));
+                lista.addLast(bloque); 
+            }
         }
-        
-        
-        
-        
+ 
     }
  
     public void start() {
@@ -284,26 +282,25 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
          //checa colision con bloques
          for (int i = 0; i < lista.size(); i++) {
             bloques bloque = (bloques) lista.get(i);
-            if (pelota.intersecta(bloque)) 
-            {
-                bomb.play();    //sonido al colisionar
-                
-                // si le planeta pega abajo del asteroide se le suma 100 al score
+            
+                // si le pelota pega abajo del bloque se le suma 100 al score
                 if (pelota.intersecta(bloque) && (bloque.getPosY() + bloque.getAlto() - 15) < pelota.getPosY())
                 {
-                    score += 100;
+                    
+                    pchocoy = true;
+                    lista.remove(i);
+                    //score += 100;
+                    
                 }
                 // si el planeta intersecta el asteroide por un lado se le resta una vida y 
                 // aumenta la velocidad
                 else if(pelota.intersecta(bloque) && bloque.getPosY() + bloque.getAlto() - 15 >= pelota.getPosY())
                 {
-                    //vidas--;
-                    velocidad++;
+                    pchocox = true;
+                    lista.remove(i);
                 }
-                //Los asteroides aparecen en un rando random
-                bloque.setPosX(((int) (Math.random() * (300 - 100))) + 100);
-                bloque.setPosY(0);
-            }
+                
+            
         }
    
     }
