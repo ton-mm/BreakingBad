@@ -26,6 +26,7 @@ import java.net.URL;
 import java.util.Vector;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import java.util.LinkedList;
 
 /**
  *
@@ -72,6 +73,10 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
     private boolean inst = false;
     private boolean pclic = false;
     
+    //lista de bloques
+    private LinkedList lista;
+    
+    
     //variables para el manejo de archivos
     private Vector vec;    // Objeto vector para agregar el puntaje.
     private String nombreArchivo;    //Nombre del archivo.
@@ -97,7 +102,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         nombreArchivo = "Puntaje.txt";
         vec = new Vector();
         
-        
+        lista = new LinkedList();
         direccion = 0;
         this.setSize(1000, 700);
         URL eURL = this.getClass().getResource("Imagenes/bola.png");
@@ -129,9 +134,20 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         addMouseListener(this);
         addMouseMotionListener(this); 
         
+      
+        // lista de bloques
+        for(int k = 0; k < 13; k++)
+        {
+            URL aURL = this.getClass().getResource("Imagenes/brick.png");
+            bloque = new bloques(30 + 70 * k, 70, Toolkit.getDefaultToolkit().getImage(aURL));
+            //bloque.setPosX(bloque.getPosX() - bloque.getAncho());
+            //bloque.setPosY(bloque.getPosY() - bloque.getAlto());
+            lista.addLast(bloque);
+        }
         
-        //movimiento de pelota en y
-        //py = -5 + 1 * tiempoActual;
+        
+        
+        
     }
  
     public void start() {
@@ -245,31 +261,49 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
     public void checaColision() {
         
        
-        if(pelota.getPosX() + pelota.getAncho() >= getWidth() || pelota.getPosX() <= 0)
-        {
+        if(pelota.getPosX() + pelota.getAncho() >= getWidth() || pelota.getPosX() <= 0){
             pchocox = true;
         }
         
-        
-         if (pelota.getPosX() + pelota.getAncho() >= getWidth()) 
-         {
-            
+        if (pelota.getPosX() + pelota.getAncho() >= getWidth()) {
             pchocox = true;
-       
         }
+        
         if (pelota.getPosY() + pelota.getAlto() >= getHeight()) {
-            pchocoy = true;
-            
+            pchocoy = true;  
         }
         
         if (pelota.getPosY() <= 0) {
             pchocoy = true;
-            
         }
         
          if (pelota.intersecta(barra) && (pelota.getPosY() + pelota.getAlto() - 5) <= barra.getPosY()) {
-            pchocoy = true;
-           
+            pchocoy = true;  
+        }
+         
+         //checa colision con bloques
+         for (int i = 0; i < lista.size(); i++) {
+            bloques bloque = (bloques) lista.get(i);
+            if (pelota.intersecta(bloque)) 
+            {
+                bomb.play();    //sonido al colisionar
+                
+                // si le planeta pega abajo del asteroide se le suma 100 al score
+                if (pelota.intersecta(bloque) && (bloque.getPosY() + bloque.getAlto() - 15) < pelota.getPosY())
+                {
+                    score += 100;
+                }
+                // si el planeta intersecta el asteroide por un lado se le resta una vida y 
+                // aumenta la velocidad
+                else if(pelota.intersecta(bloque) && bloque.getPosY() + bloque.getAlto() - 15 >= pelota.getPosY())
+                {
+                    //vidas--;
+                    velocidad++;
+                }
+                //Los asteroides aparecen en un rando random
+                bloque.setPosX(((int) (Math.random() * (300 - 100))) + 100);
+                bloque.setPosY(0);
+            }
         }
    
     }
@@ -312,6 +346,13 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
    
         //
         g.drawImage(barra.getImagenI(), barra.getPosX(), barra.getPosY(), this);
+        
+     
+        for (int i = 0; i < lista.size(); i++) {
+            bloques bloque = (bloques) lista.get(i);
+            g.drawImage(bloque.getImagenI(), bloque.getPosX(), bloque.getPosY(), this);
+        }
+        
         
         
         g.setColor(Color.black);
