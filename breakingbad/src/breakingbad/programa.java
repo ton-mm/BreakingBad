@@ -301,7 +301,15 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         }
         
          if (pelota.intersecta(barra) && (pelota.getPosY() + pelota.getAlto() - 5) <= barra.getPosY()) {
-            pchocoy = true;  
+            if(pelota.getPosX() + pelota.getAncho()/2 < barra.getPosX() + barra.getAncho()/2 && velocidadx > 0)
+            {
+                pchocox = true;
+            }
+            else if(pelota.getPosX() + pelota.getAncho()/2 > barra.getPosX() + barra.getAncho()/2 && velocidadx < 0)
+            {
+                pchocox = true;
+            }
+             pchocoy = true;  
         }
          
          //checa colision con bloques
