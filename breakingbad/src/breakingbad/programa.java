@@ -56,7 +56,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
     private int y1; // posicion del mouse en y
     private int x_pos;
     private int y_pos;
-    private int vidas = 5;
+    private int vidas = 1;
     private int score = 0;
     private boolean pausa = false;
     private boolean clic = false; //para saber cuando hace clic
@@ -138,7 +138,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         // lista de bloques
         for(int k = 0; k < 13; k++)
         {
-            for(int i = 0; i < 5 ; i++)
+            for(int i = 0; i < 7 ; i++)
             {
                URL aURL = this.getClass().getResource("Imagenes/brick.png");
                 bloque = new bloques(30 + 70 * k, i * 30 + 70, Toolkit.getDefaultToolkit().getImage(aURL));
@@ -163,7 +163,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         //Guarda el tiempo actual del sistema 
         
         
-         while (vidas > 0) {
+         while (true) {
             if (!pausa) {
                 actualiza();
                 checaColision();
@@ -183,6 +183,23 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
     public void actualiza() {
         
          
+        if(vidas == 0)
+        {
+            lista.clear();
+            // lista de bloques
+        for(int k = 0; k < 13; k++)
+        {
+            for(int i = 0; i < 7 ; i++)
+            {
+               URL aURL = this.getClass().getResource("Imagenes/brick.png");
+                bloque = new bloques(30 + 70 * k, i * 30 + 70, Toolkit.getDefaultToolkit().getImage(aURL));
+                lista.addLast(bloque); 
+            }
+        }
+        vidas ++;
+            
+        }
+        
         // tiempo de jframe
         if(btiempo)
         {
@@ -202,7 +219,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
             {
                 //movimiento de pelota en x
                 velocidadx = 5;
-                velocidady = 5;
+                velocidady = -5;
                 
             
                 //boolean para tiempo
@@ -253,24 +270,32 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
     
  }
         
-        
-    
  
     public void checaColision() {
         
-       
+        //checa colision con la parte de la izquierda
         if(pelota.getPosX() + pelota.getAncho() >= getWidth() || pelota.getPosX() <= 0){
             pchocox = true;
         }
         
+        // checa colision con la parte de la derecha
         if (pelota.getPosX() + pelota.getAncho() >= getWidth()) {
             pchocox = true;
         }
         
+        
+        // checa colision con la parte de abajo
         if (pelota.getPosY() + pelota.getAlto() >= getHeight()) {
             pchocoy = true;  
+            velocidadx = 0;
+            velocidady = 0;
+            pelota.setPosX(getWidth()/2);
+            pelota.setPosY(getHeight() - 100);
+            clic = false;
+            vidas--;
         }
         
+        //checa colision con la parte de arriba
         if (pelota.getPosY() <= 0) {
             pchocoy = true;
         }
@@ -445,9 +470,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
            // guardar = false;
         //}
    	
-    }
-    
-    
+    }  
     
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_P) //Presiono tecla P

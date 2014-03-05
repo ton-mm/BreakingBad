@@ -22,17 +22,22 @@ public class bloques extends Base {
          
         private static final String desaparece = "DESAPARECE";
         private static final String pausado = "PAUSADO";  
-        
-       /* public getpausado()
-        {
-            return pausado;
-        }
-        */
+        private boolean powerup = false;
     
 	public bloques(int posX,int posY,Image image)
         {
 		super(posX,posY,image);	
 	}
+        
+        public void setPowerup(boolean x)
+        {
+            powerup = x;
+        }
+        
+        public boolean getPowerup()
+        {
+            return powerup;
+        }
         
         public boolean tiene (int posX,int posY)
         {
