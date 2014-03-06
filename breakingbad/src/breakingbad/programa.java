@@ -90,6 +90,8 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
     private long tiempoActual;
     private long tiempoInicial;
     
+    private Animacion anim;
+    
     public programa() {
         init();
         start();
@@ -105,7 +107,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         lista = new LinkedList();
         direccion = 0;
         this.setSize(1000, 700);
-        URL eURL = this.getClass().getResource("Imagenes/bola.png");
+        URL eURL = this.getClass().getResource("Imagenes/Bomb1.png");
         int dposy = getHeight() / 2 + getHeight() / 8;
         pelota = new Bueno(getWidth()/2, getHeight() - 100, Toolkit.getDefaultToolkit().getImage(eURL));
         //pelota.setPosX((int) (getWidth()/2));
@@ -140,11 +142,33 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         {
             for(int i = 0; i < 7 ; i++)
             {
-               URL aURL = this.getClass().getResource("Imagenes/brick.png");
+               URL aURL = this.getClass().getResource("Imagenes/meth.png");
                 bloque = new bloques(30 + 70 * k, i * 30 + 70, Toolkit.getDefaultToolkit().getImage(aURL));
                 lista.addLast(bloque); 
             }
         }
+        
+        //Se cargan las imágenes(cuadros) para la animación
+	Image bomba1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Imagenes/Bomb1.png"));
+	Image bomba2 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Imagenes/Bomb2.png"));
+	Image bomba3 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Imagenes/Bomb3.png"));
+	Image bomba4 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Imagenes/Bomb4.png"));
+	//Image bomba5 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Imagenes/Bomb4.png"));
+	//Image bomba6 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Imagenes/Bomb3.png"));
+	//Image bomba7 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Imagenes/Bomb2.png"));
+	//Image bomba8 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Imagenes/Bomb1.png"));
+        
+        //Se crea la animación
+	anim = new Animacion();
+	anim.sumaCuadro(bomba1, 100);
+        anim.sumaCuadro(bomba2, 100);
+        anim.sumaCuadro(bomba3, 100);
+        anim.sumaCuadro(bomba4, 100);
+        anim.sumaCuadro(bomba4, 100);
+        anim.sumaCuadro(bomba3, 100);
+        anim.sumaCuadro(bomba2, 100);
+        anim.sumaCuadro(bomba1, 100);
+        
  
     }
  
@@ -191,7 +215,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         {
             for(int i = 0; i < 7 ; i++)
             {
-               URL aURL = this.getClass().getResource("Imagenes/brick.png");
+               URL aURL = this.getClass().getResource("Imagenes/meth.png");
                 bloque = new bloques(30 + 70 * k, i * 30 + 70, Toolkit.getDefaultToolkit().getImage(aURL));
                 lista.addLast(bloque); 
             }
