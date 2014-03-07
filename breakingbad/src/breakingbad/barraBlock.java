@@ -29,21 +29,21 @@ public class barraBlock extends baseBlock {
         {
 		super(posX,posY);	
                 //
-                Image bomba1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Imagenes/barra.png"));
-                Image bomba2 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Imagenes/barra.png"));
-                Image bomba3 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Imagenes/barra.png"));
-                Image bomba4 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Imagenes/barra.png"));
+                Image bomba1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Imagenes/Hank1.png"));
+                Image bomba2 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Imagenes/Hank2.png"));
+                Image bomba3 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Imagenes/Hank3.png"));
+                Image bomba4 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Imagenes/Hank4.png"));
                 
                 //Se crea la animación
-	anim = new Animacion();
-	anim.sumaCuadro(bomba1, 100);
-        anim.sumaCuadro(bomba2, 100);
-        anim.sumaCuadro(bomba3, 100);
-        anim.sumaCuadro(bomba4, 100);
-        anim.sumaCuadro(bomba4, 100);
-        anim.sumaCuadro(bomba3, 100);
-        anim.sumaCuadro(bomba2, 100);
-        anim.sumaCuadro(bomba1, 100);
+                anim = new Animacion();
+                anim.sumaCuadro(bomba1, 100);
+                anim.sumaCuadro(bomba2, 100);
+                anim.sumaCuadro(bomba3, 100);
+                anim.sumaCuadro(bomba4, 100);
+                anim.sumaCuadro(bomba4, 100);
+                anim.sumaCuadro(bomba3, 100);
+                anim.sumaCuadro(bomba2, 100);
+                anim.sumaCuadro(bomba1, 100);
 	}
         
         public void setPowerup(boolean x)

@@ -116,7 +116,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         URL eURL = this.getClass().getResource("Imagenes/Bomb1.png");
         int dposy = getHeight() / 2 + getHeight() / 8;
         
-        pelota = new buenoBlock(getWidth()/2, getHeight() - 100);
+        pelota = new buenoBlock(getWidth()/2, getHeight() - 150);
         //pelota.setPosX((int) (getWidth()/2));
         //pelota.setPosY(getHeight());
         int posrX =  getWidth()/2 ;    //posision x es tres cuartos del applet
@@ -245,6 +245,8 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
             
         }
         
+        barra.actualizaAnimacion(tiempoActual);
+        
         // block1.actualizaAnimacion(tiempoActual);
         
         
@@ -301,12 +303,12 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         
         if(left)
         {
-            barra.setPosX(barra.getPosX() - 10);
+            barra.setPosX(barra.getPosX() - 70);
             left = false;
         }
         else if(right)
         {
-            barra.setPosX(barra.getPosX() + 10);
+            barra.setPosX(barra.getPosX() + 70);
             right = false;
         }
         
@@ -361,7 +363,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
             velocidadx = 0;
             velocidady = 0;
             pelota.setPosX(getWidth()/2);
-            pelota.setPosY(getHeight() - 100);
+            pelota.setPosY(getHeight() - 150);
             clic = false;
             vidas--;
         }
@@ -442,6 +444,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
             block block1 = (block) listaOsos.get(i);
             g.drawImage(block1.getImagenI(), block1.getPosX(), block1.getPosY(), this);
         }
+            
             
  
         } else {
