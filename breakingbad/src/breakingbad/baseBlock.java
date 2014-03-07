@@ -123,7 +123,7 @@ public class baseBlock extends Animacion{
 	 * @return un valor boleano <code>true</code> si lo intersecta <code>false</code>
 	 * en caso contrario
 	 */
-	public boolean intersecta(Base obj){
+	public boolean intersecta(baseBlock obj){
 		return getPerimetro().intersects(obj.getPerimetro());
 	}
         

@@ -13,7 +13,7 @@ package breakingbad;
 import java.awt.Image;
 import java.awt.Toolkit;
 
-public class buenoBlock extends baseBlock {
+public class barraBlock extends baseBlock {
     /**
 	 * Metodo constructor que hereda los atributos de la clase <code>Base</code>.
 	 * @param posX es la <code>posiscion en x</code> del objeto elefante.
@@ -25,14 +25,14 @@ public class buenoBlock extends baseBlock {
         private static final String pausado = "PAUSADO";  
         private boolean powerup = false;
     
-	public buenoBlock(int posX,int posY)
+	public barraBlock(int posX,int posY)
         {
 		super(posX,posY);	
                 //
-                Image bomba1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Imagenes/Bomb1.png"));
-                Image bomba2 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Imagenes/Bomb2.png"));
-                Image bomba3 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Imagenes/Bomb3.png"));
-                Image bomba4 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Imagenes/Bomb4.png"));
+                Image bomba1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Imagenes/barra.png"));
+                Image bomba2 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Imagenes/barra.png"));
+                Image bomba3 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Imagenes/barra.png"));
+                Image bomba4 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Imagenes/barra.png"));
                 
                 //Se crea la animación
 	anim = new Animacion();

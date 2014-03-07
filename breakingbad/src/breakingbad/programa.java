@@ -46,8 +46,8 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
     private SoundClip buuu;    // Objeto AudioClip
     private SoundClip bomb;    //Objeto AudioClip
     private SoundClip teleport;
-    private Bueno pelota;    // Objeto de la clase Bueno
-    private Malo barra;    //Objeto de la clase Malo
+    private buenoBlock pelota;    // Objeto de la clase Bueno
+    private barraBlock barra;    //Objeto de la clase Malo
     private bloques bloque; // bloques
     private int ancho;  //Ancho del elefante
     private int alto;   //Alto del elefante
@@ -115,13 +115,14 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         this.setSize(1000, 700);
         URL eURL = this.getClass().getResource("Imagenes/Bomb1.png");
         int dposy = getHeight() / 2 + getHeight() / 8;
-        pelota = new Bueno(getWidth()/2, getHeight() - 100, Toolkit.getDefaultToolkit().getImage(eURL));
+        
+        pelota = new buenoBlock(getWidth()/2, getHeight() - 100);
         //pelota.setPosX((int) (getWidth()/2));
         //pelota.setPosY(getHeight());
         int posrX =  getWidth()/2 ;    //posision x es tres cuartos del applet
         int posrY =   getHeight() ;  //posision y es tres cuartos del applet
-        URL rURL = this.getClass().getResource("Imagenes/barra.png");
-        barra = new Malo(posrX, posrY, Toolkit.getDefaultToolkit().getImage(rURL));
+        //URL rURL = this.getClass().getResource("Imagenes/barra.png");
+        barra = new barraBlock(posrX, posrY);
         barra.setPosX(barra.getPosX() - barra.getAncho()/2);
         barra.setPosY(barra.getPosY() - barra.getAlto());
         setBackground(Color.white);
@@ -383,24 +384,24 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         }
          
          //checa colision con bloques
-         for (int i = 0; i < lista.size(); i++) {
-            bloques bloque = (bloques) lista.get(i);
+         for (int i = 0; i < listaOsos.size(); i++) {
+            block block1 = (block) listaOsos.get(i);
             
                 // si le pelota pega abajo del bloque se le suma 100 al score
-                if (pelota.intersecta(bloque) && (bloque.getPosY() + bloque.getAlto() - 15) < pelota.getPosY())
+                if (pelota.intersecta(block1) && (block1.getPosY() + block1.getAlto() - 15) < pelota.getPosY())
                 {
                     
                     pchocoy = true;
-                    lista.remove(i);
+                    listaOsos.remove(i);
                     //score += 100;
                     
                 }
                 // si el planeta intersecta el asteroide por un lado se le resta una vida y 
                 // aumenta la velocidad
-                else if(pelota.intersecta(bloque) && bloque.getPosY() + bloque.getAlto() - 15 >= pelota.getPosY())
+                else if(pelota.intersecta(block1) && block1.getPosY() + block1.getAlto() - 15 >= pelota.getPosY())
                 {
                     pchocox = true;
-                    lista.remove(i);
+                    listaOsos.remove(i);
                 }
                 
             
