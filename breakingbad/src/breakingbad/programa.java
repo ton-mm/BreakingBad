@@ -267,6 +267,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         }
         
         barra.actualizaAnimacion(tiempoActual);
+        pelota.actualizaAnimacion(tiempoActual);
         
         // block1.actualizaAnimacion(tiempoActual);
         
