@@ -414,7 +414,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
              pchocoy = true;  
         }
          
-         //checa colision con bloques
+         //checa colision con Potions
          for (int i = 0; i < listaPotions.size(); i++) {
             block block1 = (block) listaPotions.get(i);
             
@@ -434,9 +434,52 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
                     pchocox = true;
                     listaPotions.remove(i);
                 }
-                
+         }
+         
+         //checa colision con Osos
+         for (int i = 0; i < listaOsos.size(); i++) {
+            Osos oso1 = (Osos) listaOsos.get(i);
             
+                // si le pelota pega abajo del bloque se le suma 100 al score
+                if (pelota.intersecta(oso1) && (oso1.getPosY() + oso1.getAlto() - 15) < pelota.getPosY())
+                {
+                    
+                    pchocoy = true;
+                    listaOsos.remove(i);
+                    //score += 100;
+                    
+                }
+                // si el planeta intersecta el asteroide por un lado se le resta una vida y 
+                // aumenta la velocidad
+                else if(pelota.intersecta(oso1) && oso1.getPosY() + oso1.getAlto() - 15 >= pelota.getPosY())
+                {
+                    pchocox = true;
+                    listaOsos.remove(i);
+                }
         }
+         
+         //checa colision con Meth
+         for (int i = 0; i < listaMeth.size(); i++) {
+            Meth meth1 = (Meth) listaMeth.get(i);
+            
+                // si le pelota pega abajo del bloque se le suma 100 al score
+                if (pelota.intersecta(meth1) && (meth1.getPosY() + meth1.getAlto() - 15) < pelota.getPosY())
+                {
+                    
+                    pchocoy = true;
+                    listaMeth.remove(i);
+                    //score += 100;
+                    
+                }
+                // si el planeta intersecta el asteroide por un lado se le resta una vida y 
+                // aumenta la velocidad
+                else if(pelota.intersecta(meth1) && meth1.getPosY() + meth1.getAlto() - 15 >= pelota.getPosY())
+                {
+                    pchocox = true;
+                    listaMeth.remove(i);
+                }
+        }
+         
    
     }
  
