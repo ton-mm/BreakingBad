@@ -92,6 +92,10 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
     
     private Animacion anim;
     
+    private block block1; // bloques
+    private int posX;
+    private int posY;
+    
     public programa() {
         init();
         start();
@@ -135,6 +139,13 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         // alto2 = barra.getIconHeight();
         addMouseListener(this);
         addMouseMotionListener(this); 
+        
+
+       
+        
+        block1 = new block (500,500);
+        
+        
         
       
         // lista de bloques
@@ -205,6 +216,17 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
     }
     
     public void actualiza() {
+        //
+        //Determina el tiempo que ha transcurrido desde que el Applet inicio su ejecución
+        long tiempoTranscurrido = System.currentTimeMillis() - tiempoActual;
+        
+        //Guarda el tiempo actual
+        tiempoActual += tiempoTranscurrido;
+        
+        
+            //Actualiza la animación en base al tiempo transcurrido
+            block1.actualizaAnimacion(tiempoActual);
+        
         
          
         if(vidas == 0)
@@ -384,10 +406,11 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
     
     public void paint1(Graphics g) {
         if (vidas>0){
-        if (pelota != null && barra != null) {
+        if (pelota != null && barra != null && block1 != null) {
             //Dibuja la imagen en la posicion actualizada
             g.drawImage(pelota.getImagenI(), pelota.getPosX(), pelota.getPosY(), this);
             g.drawImage(barra.getImagenI(), barra.getPosX(), barra.getPosY(), this);
+            g.drawImage(block1.getImagenI(), block1.getPosX(), block1.getPosY(), this);
  
         } else {
             //Da un mensaje mientras se carga el dibujo
