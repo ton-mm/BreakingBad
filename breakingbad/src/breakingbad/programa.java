@@ -46,9 +46,11 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
     private SoundClip buuu;    // Objeto AudioClip
     private SoundClip bomb;    //Objeto AudioClip
     private SoundClip teleport;
-    private buenoBlock pelota;    // Objeto de la clase Bueno
-    private barraBlock barra;    //Objeto de la clase Malo
+    
+    private buenoBlock pelota;    // Objeto de la clase buenoBlock
+    private barraBlock barra;    //Objeto de la clase barraBlock
     private bloques bloque; // bloques
+    
     private int ancho;  //Ancho del elefante
     private int alto;   //Alto del elefante
     private ImageIcon elefante; // Imagen del elefante.
@@ -76,6 +78,8 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
     //lista de bloques
     private LinkedList lista;
     private LinkedList listaOsos;
+    private LinkedList listaPotions;
+    private LinkedList listaMeth;
     
     
     //variables para el manejo de archivos
@@ -95,6 +99,9 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
     
     private block block1; // bloques
     private block block2; // bloques
+    private Osos oso1; // oso de la clase Osos
+    private Meth meth1; //objeto meth1 de la Clase Meth
+    
     private int posX;
     private int posY;
     
@@ -143,7 +150,9 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         addMouseListener(this);
         addMouseMotionListener(this);
         
+        listaPotions = new LinkedList();
         listaOsos = new LinkedList();
+        listaMeth = new LinkedList();
 
         //block2 = new block (500,500);
         
@@ -152,8 +161,19 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         {
             for(int i = 0; i < 7 ; i++)
             {
-                block1 = new block(30 + 70 * k, i * 30 + 70);
-                listaOsos.addLast(block1); 
+                if(i == 6){
+                    
+                    oso1 = new Osos(37 + 70 * k, i * 40 + 70);
+                    listaOsos.addLast(oso1);
+                    
+                }else if(i == 5) {
+                    block1 = new block(30 + 70 * k, i * 33 + 70);
+                    listaPotions.addLast(block1); 
+                }else if(i == 4) {
+                    meth1 = new Meth(50 + 70 * k, i * 33 + 70);
+                    listaMeth.addLast(meth1); 
+                    
+                }
             }
         }
         
@@ -238,10 +258,11 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         
             //Actualiza la animación en base al tiempo transcurrido
         
-        for(int x=0; x<listaOsos.size(); x++) {
+        for(int x=0; x<listaPotions.size(); x++) {
             
-            block block1 = (block) listaOsos.get(x);
+            block block1 = (block) listaPotions.get(x);
             block1.actualizaAnimacion(tiempoActual);
+            oso1.actualizaAnimacion(tiempoActual);
             
         }
         
@@ -254,19 +275,26 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         if(vidas == 0)
         {
             //lista.clear();
-            listaOsos.clear();
+            listaPotions.clear();
             // lista de bloques
         for(int k = 0; k < 13; k++)
         {
             for(int i = 0; i < 7 ; i++)
             {
-               //URL aURL = this.getClass().getResource("Imagenes/meth.png");
-               //bloque = new bloques(30 + 70 * k, i * 30 + 70, Toolkit.getDefaultToolkit().getImage(aURL));
-               //lista.addLast(bloque); 
-                
-                //URL aURL = this.getClass().getResource("Imagenes/meth.png");
-                block1 = new block(30 + 70 * k, i * 30 + 70);
-                listaOsos.addLast(block1); 
+               if(i == 6){
+                    
+                    oso1 = new Osos(37 + 70 * k, i * 40 + 70);
+                    listaOsos.addLast(oso1);
+                    
+                }else if(i == 5) {
+                    block1 = new block(30 + 70 * k, i * 33 + 70);
+                    listaPotions.addLast(block1); 
+                }else if(i == 4) {
+                    meth1 = new Meth(50 + 70 * k, i * 33 + 70);
+                    listaMeth.addLast(meth1); 
+                    
+                }
+               
             }
         }
         vidas ++;
@@ -386,15 +414,15 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         }
          
          //checa colision con bloques
-         for (int i = 0; i < listaOsos.size(); i++) {
-            block block1 = (block) listaOsos.get(i);
+         for (int i = 0; i < listaPotions.size(); i++) {
+            block block1 = (block) listaPotions.get(i);
             
                 // si le pelota pega abajo del bloque se le suma 100 al score
                 if (pelota.intersecta(block1) && (block1.getPosY() + block1.getAlto() - 15) < pelota.getPosY())
                 {
                     
                     pchocoy = true;
-                    listaOsos.remove(i);
+                    listaPotions.remove(i);
                     //score += 100;
                     
                 }
@@ -403,7 +431,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
                 else if(pelota.intersecta(block1) && block1.getPosY() + block1.getAlto() - 15 >= pelota.getPosY())
                 {
                     pchocox = true;
-                    listaOsos.remove(i);
+                    listaPotions.remove(i);
                 }
                 
             
@@ -433,16 +461,24 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
     
     public void paint1(Graphics g) {
         if (vidas>0){
-        if (pelota != null && barra != null && listaOsos != null) {
+        if (pelota != null && barra != null && listaPotions != null && listaOsos != null && listaMeth != null) {
             //Dibuja la imagen en la posicion actualizada
             g.drawImage(pelota.getImagenI(), pelota.getPosX(), pelota.getPosY(), this);
             g.drawImage(barra.getImagenI(), barra.getPosX(), barra.getPosY(), this);
             //g.drawImage(block2.getImagenI(), block2.getPosX(), block2.getPosY(), this);
             
             
-            for (int i = 0; i < listaOsos.size(); i++) {
-            block block1 = (block) listaOsos.get(i);
+            for (int i = 0; i < listaPotions.size(); i++) {
+            block block1 = (block) listaPotions.get(i);
             g.drawImage(block1.getImagenI(), block1.getPosX(), block1.getPosY(), this);
+        }
+            for (int i = 0; i < listaOsos.size(); i++) {
+            Osos oso1 = (Osos) listaOsos.get(i);
+            g.drawImage(oso1.getImagenI(), oso1.getPosX(), oso1.getPosY(), this);
+        }
+            for (int i = 0; i < listaMeth.size(); i++) {
+            Meth meth1 = (Meth) listaMeth.get(i);
+            g.drawImage(meth1.getImagenI(), meth1.getPosX(), meth1.getPosY(), this);
         }
             
             
