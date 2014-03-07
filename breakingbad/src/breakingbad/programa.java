@@ -75,6 +75,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
     
     //lista de bloques
     private LinkedList lista;
+    private LinkedList listaOsos;
     
     
     //variables para el manejo de archivos
@@ -93,6 +94,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
     private Animacion anim;
     
     private block block1; // bloques
+    private block block2; // bloques
     private int posX;
     private int posY;
     
@@ -138,15 +140,23 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         //ancho2 = barra.getIconWidth();
         // alto2 = barra.getIconHeight();
         addMouseListener(this);
-        addMouseMotionListener(this); 
+        addMouseMotionListener(this);
         
+        listaOsos = new LinkedList();
 
-       
+        //block2 = new block (500,500);
         
-        block1 = new block (500,500);
+        // lista de Osos
+        for(int k = 0; k < 13; k++)
+        {
+            for(int i = 0; i < 7 ; i++)
+            {
+                block1 = new block(30 + 70 * k, i * 30 + 70);
+                listaOsos.addLast(block1); 
+            }
+        }
         
-        
-        
+    /* 
       
         // lista de bloques
         for(int k = 0; k < 13; k++)
@@ -158,6 +168,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
                 lista.addLast(bloque); 
             }
         }
+        */
         
         //Se cargan las imágenes(cuadros) para la animación
 	Image bomba1 = Toolkit.getDefaultToolkit().getImage(this.getClass().getResource("Imagenes/Bomb1.png"));
@@ -225,21 +236,34 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         
         
             //Actualiza la animación en base al tiempo transcurrido
+        
+        for(int x=0; x<listaOsos.size(); x++) {
+            
+            block block1 = (block) listaOsos.get(x);
             block1.actualizaAnimacion(tiempoActual);
+            
+        }
+        
+        // block1.actualizaAnimacion(tiempoActual);
         
         
          
         if(vidas == 0)
         {
-            lista.clear();
+            //lista.clear();
+            listaOsos.clear();
             // lista de bloques
         for(int k = 0; k < 13; k++)
         {
             for(int i = 0; i < 7 ; i++)
             {
-               URL aURL = this.getClass().getResource("Imagenes/meth.png");
-                bloque = new bloques(30 + 70 * k, i * 30 + 70, Toolkit.getDefaultToolkit().getImage(aURL));
-                lista.addLast(bloque); 
+               //URL aURL = this.getClass().getResource("Imagenes/meth.png");
+               //bloque = new bloques(30 + 70 * k, i * 30 + 70, Toolkit.getDefaultToolkit().getImage(aURL));
+               //lista.addLast(bloque); 
+                
+                //URL aURL = this.getClass().getResource("Imagenes/meth.png");
+                block1 = new block(30 + 70 * k, i * 30 + 70);
+                listaOsos.addLast(block1); 
             }
         }
         vidas ++;
@@ -406,11 +430,18 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
     
     public void paint1(Graphics g) {
         if (vidas>0){
-        if (pelota != null && barra != null && block1 != null) {
+        if (pelota != null && barra != null && listaOsos != null) {
             //Dibuja la imagen en la posicion actualizada
             g.drawImage(pelota.getImagenI(), pelota.getPosX(), pelota.getPosY(), this);
             g.drawImage(barra.getImagenI(), barra.getPosX(), barra.getPosY(), this);
+            //g.drawImage(block2.getImagenI(), block2.getPosX(), block2.getPosY(), this);
+            
+            
+            for (int i = 0; i < listaOsos.size(); i++) {
+            block block1 = (block) listaOsos.get(i);
             g.drawImage(block1.getImagenI(), block1.getPosX(), block1.getPosY(), this);
+        }
+            
  
         } else {
             //Da un mensaje mientras se carga el dibujo
@@ -424,11 +455,13 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         //
         g.drawImage(barra.getImagenI(), barra.getPosX(), barra.getPosY(), this);
         
-     
+     /*
         for (int i = 0; i < lista.size(); i++) {
             bloques bloque = (bloques) lista.get(i);
             g.drawImage(bloque.getImagenI(), bloque.getPosX(), bloque.getPosY(), this);
         }
+      */
+        
         
         
         

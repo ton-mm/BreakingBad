@@ -35,8 +35,8 @@ public class block extends baseBlock {
                 anim = new Animacion();
                 anim.sumaCuadro(bloque1, 100);
                 anim.sumaCuadro(bloque2, 100);
-                anim.sumaCuadro(bloque2, 100);
                 anim.sumaCuadro(bloque1, 100);
+                anim.sumaCuadro(bloque2, 100);
 	}
         
         public void setPowerup(boolean x)
