@@ -101,6 +101,13 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
     private block block2; // bloques
     private Osos oso1; // oso de la clase Osos
     private Meth meth1; //objeto meth1 de la Clase Meth
+    private Gemelo1 twin1;
+    private Gemelo2 twin2;
+    private Malo1 bad1;
+    private Malo2 bad2;
+    private Malo3 bad3;
+    private Tuco tuco1;
+    private SenorZalamanca zalamanca1;
     
     private int posX;
     private int posY;
@@ -177,6 +184,13 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
             }
         }
         
+        twin1 = new Gemelo1( 100, 85);
+        twin2 = new Gemelo2( 200, 85);
+        bad1 = new Malo1( 300, 85);
+        bad2 = new Malo2( 400, 85);
+        bad3 = new Malo3( 500, 85);
+        tuco1 = new Tuco( 600, 85);
+        zalamanca1 = new SenorZalamanca( 700, 85);
     /* 
       
         // lista de bloques
@@ -268,6 +282,13 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         
         barra.actualizaAnimacion(tiempoActual);
         pelota.actualizaAnimacion(tiempoActual);
+        twin1.actualizaAnimacion(tiempoActual);
+        twin2.actualizaAnimacion(tiempoActual);
+        bad1.actualizaAnimacion(tiempoActual);
+        bad2.actualizaAnimacion(tiempoActual);
+        bad3.actualizaAnimacion(tiempoActual);
+        tuco1.actualizaAnimacion(tiempoActual);
+        zalamanca1.actualizaAnimacion(tiempoActual);
         
         // block1.actualizaAnimacion(tiempoActual);
         
@@ -298,6 +319,15 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
                
             }
         }
+        
+        twin1 = new Gemelo1( 100, 85);
+        twin2 = new Gemelo2( 200, 85);
+        bad1 = new Malo1( 300, 85);
+        bad2 = new Malo2( 400, 85);
+        bad3 = new Malo3( 500, 85);
+        tuco1 = new Tuco( 600, 85);
+        zalamanca1 = new SenorZalamanca( 700, 85);
+        
         vidas ++;
             
         }
@@ -479,6 +509,73 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
                     listaMeth.remove(i);
                 }
         }
+   ///      
+         //checa colision con Malo1
+         // si le pelota pega abajo del bloque se le suma 100 al score
+                if (pelota.intersecta(bad1) && (bad1.getPosY() +bad1.getAlto() - 15) < pelota.getPosY())
+                {
+                    pchocoy = true;
+                }
+                // si el planeta intersecta el asteroide por un lado se le resta una vida y 
+                // aumenta la velocidad
+                else if(pelota.intersecta(bad1) && bad1.getPosY() + bad1.getAlto() - 15 >= pelota.getPosY())
+                {
+                    pchocox = true;
+                }
+                
+                //checa colision con Malo2
+                // si le pelota pega abajo del bloque se le suma 100 al score
+                if (pelota.intersecta(bad2) && (bad2.getPosY() +bad2.getAlto() - 15) < pelota.getPosY())
+                {
+                    pchocoy = true;
+                }
+                // si el planeta intersecta el asteroide por un lado se le resta una vida y 
+                // aumenta la velocidad
+                else if(pelota.intersecta(bad2) && bad2.getPosY() + bad2.getAlto() - 15 >= pelota.getPosY())
+                {
+                    pchocox = true;
+                }
+                
+                 //checa colision con Malo3
+                 // si le pelota pega abajo del bloque se le suma 100 al score
+                if (pelota.intersecta(bad3) && (bad3.getPosY() +bad3.getAlto() - 15) < pelota.getPosY())
+                {
+                    pchocoy = true;
+                }
+                // si el planeta intersecta el asteroide por un lado se le resta una vida y 
+                // aumenta la velocidad
+                else if(pelota.intersecta(bad3) && bad3.getPosY() + bad3.getAlto() - 15 >= pelota.getPosY())
+                {
+                    pchocox = true;
+                }
+                
+                //checa colision con Tuco
+                // si le pelota pega abajo del bloque se le suma 100 al score
+                if (pelota.intersecta(tuco1) && (tuco1.getPosY() +tuco1.getAlto() - 15) < pelota.getPosY())
+                {
+                    pchocoy = true;
+                }
+                // si el planeta intersecta el asteroide por un lado se le resta una vida y 
+                // aumenta la velocidad
+                else if(pelota.intersecta(tuco1) && tuco1.getPosY() + tuco1.getAlto() - 15 >= pelota.getPosY())
+                {
+                    pchocox = true;
+                }
+                
+                //checa colision con Zalamanca
+                // si le pelota pega abajo del bloque se le suma 100 al score
+                if (pelota.intersecta(zalamanca1) && (zalamanca1.getPosY() +zalamanca1.getAlto() - 15) < pelota.getPosY())
+                {
+                    pchocoy = true;
+                }
+                // si el planeta intersecta el asteroide por un lado se le resta una vida y 
+                // aumenta la velocidad
+                else if(pelota.intersecta(zalamanca1) && zalamanca1.getPosY() + zalamanca1.getAlto() - 15 >= pelota.getPosY())
+                {
+                    pchocox = true;
+                }
+                
+         
          
    
     }
@@ -510,6 +607,15 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
             g.drawImage(pelota.getImagenI(), pelota.getPosX(), pelota.getPosY(), this);
             g.drawImage(barra.getImagenI(), barra.getPosX(), barra.getPosY(), this);
             //g.drawImage(block2.getImagenI(), block2.getPosX(), block2.getPosY(), this);
+            
+            g.drawImage(twin1.getImagenI(), twin1.getPosX(), twin1.getPosY(), this);
+            g.drawImage(twin2.getImagenI(), twin2.getPosX(), twin2.getPosY(), this);
+            g.drawImage(bad1.getImagenI(), bad1.getPosX(), bad1.getPosY(), this);
+            g.drawImage(bad2.getImagenI(), bad2.getPosX(), bad2.getPosY(), this);
+            g.drawImage(bad3.getImagenI(), bad3.getPosX(), bad3.getPosY(), this);
+            g.drawImage(tuco1.getImagenI(), tuco1.getPosX(), tuco1.getPosY(), this);
+            g.drawImage(zalamanca1.getImagenI(), zalamanca1.getPosX(), zalamanca1.getPosY(), this);
+            
             
             
             for (int i = 0; i < listaPotions.size(); i++) {
