@@ -87,6 +87,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
     private LinkedList listaZalamanca;
     private LinkedList listaTwin1;
     private LinkedList listaTwin2;
+    private LinkedList listaTortuga;
     
     
     //variables para el manejo de archivos
@@ -115,6 +116,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
     private Malo3 bad3;
     private Tuco tuco1;
     private SenorZalamanca zalamanca1;
+    private Tortuga tortuga1;
     
     private int posX;
     private int posY;
@@ -174,6 +176,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         listaZalamanca = new LinkedList();
         listaTwin1 = new LinkedList();
         listaTwin2 = new LinkedList();
+        listaTortuga = new LinkedList();
 
         //block2 = new block (500,500);
         
@@ -205,6 +208,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         bad3 = new Malo3( 500, 85);
         tuco1 = new Tuco( 600, 85);
         zalamanca1 = new SenorZalamanca( 700, 85);
+        tortuga1 = new Tortuga( 800, 120);
 
         listaBad1.addLast(bad1);
         listaBad2.addLast(bad2);
@@ -213,6 +217,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         listaZalamanca.addLast(zalamanca1);
         listaTwin1.addLast(twin1);
         listaTwin2.addLast(twin2);
+        listaTortuga.addLast(tortuga1);
     /* 
       
         // lista de bloques
@@ -314,6 +319,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         bad3.actualizaAnimacion(tiempoActual);
         tuco1.actualizaAnimacion(tiempoActual);
         zalamanca1.actualizaAnimacion(tiempoActual);
+        tortuga1.actualizaAnimacion(tiempoActual);
         
         // block1.actualizaAnimacion(tiempoActual);
         
@@ -365,6 +371,9 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         
         zalamanca1 = new SenorZalamanca( 700, 85);
         listaZalamanca.addLast(zalamanca1);
+        
+        tortuga1 = new Tortuga( 600, 120);
+        listaTortuga.addLast(tortuga1);
         
         vidas ++;
             
@@ -711,6 +720,29 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
                     listaTwin2.remove(i);
                 }
         }
+                
+                 //checa colision con Tortuga1
+         // si le pelota pega abajo del bloque se le suma 100 al score
+                for (int i = 0; i < listaTortuga.size(); i++) {
+                    Tortuga tortuga1 = (Tortuga) listaTortuga.get(i);
+            
+                // si le pelota pega abajo del bloque se le suma 100 al score
+                if (pelota.intersecta(tortuga1) && (tortuga1.getPosY() + tortuga1.getAlto() - 15) < pelota.getPosY())
+                {
+                    
+                    pchocoy = true;
+                    listaTortuga.remove(i);
+                    //score += 100;
+                    
+                }
+                // si el planeta intersecta el asteroide por un lado se le resta una vida y 
+                // aumenta la velocidad
+                else if(pelota.intersecta(tortuga1) && tortuga1.getPosY() + tortuga1.getAlto() - 15 >= pelota.getPosY())
+                {
+                    pchocox = true;
+                    listaTortuga.remove(i);
+                }
+        }
          
    
     }
@@ -793,6 +825,10 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
             for (int i = 0; i < listaTwin2.size(); i++) {
             Gemelo2 twin2 = (Gemelo2) listaTwin2.get(i);
             g.drawImage(twin2.getImagenI(), twin2.getPosX(), twin2.getPosY(), this);
+        }
+            for (int i = 0; i < listaTortuga.size(); i++) {
+            Tortuga tortuga1 = (Tortuga) listaTortuga.get(i);
+            g.drawImage(tortuga1.getImagenI(), tortuga1.getPosX(), tortuga1.getPosY(), this);
         }
           
             
