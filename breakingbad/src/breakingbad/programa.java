@@ -151,7 +151,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         barra.setPosY(barra.getPosY() - barra.getAlto());
         setBackground(Color.white);
         addKeyListener(this);
-        URL goURL = this.getClass().getResource("Imagenes/perder.png");
+        URL goURL = this.getClass().getResource("Imagenes/gameover.png");
         gameover = Toolkit.getDefaultToolkit().getImage(goURL);
         
         URL fondoURL = this.getClass().getResource("Imagenes/fondo3.png");
@@ -377,7 +377,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         zalamanca1 = new SenorZalamanca( 700, 85);
         listaZalamanca.addLast(zalamanca1);
         
-        tortuga1 = new Tortuga( 600, 120);
+        tortuga1 = new Tortuga( 800, 120);
         listaTortuga.addLast(tortuga1);
         
         vidas ++;
@@ -892,6 +892,8 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
      *
      * @throws IOException
      */
+    
+ /*   
     public void leeArchivo()  {
           try
           {
@@ -940,11 +942,14 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
           }
         }
     
+ */   
+    
     /**
      * Metodo que agrega la informacion del vector al archivo.
      *
      * @throws IOException
      */
+/*    
     public void grabaArchivo() throws IOException{
         
         //if(guardar) {
@@ -958,7 +963,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         //}
    	
     }  
-    
+ */   
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_P) //Presiono tecla P
         {    
@@ -970,7 +975,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
             instrucciones = !instrucciones;
             //pausa = !pausa;
         }
-        
+ /*       
         if (e.getKeyCode() == KeyEvent.VK_G) //Presiono tecla G
         {  
             try{
@@ -987,7 +992,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         {   
             leeArchivo();
         }
-       
+*/       
         
         if (e.getKeyCode() == KeyEvent.VK_UP) //Presiono flecha arriba
         {    
