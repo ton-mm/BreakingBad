@@ -41,6 +41,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
     private final int MAX = 7;    //Maximo al generar un numero al azar.
     private Image dbImage;      // Imagen a proyectar  
     private Image gameover;
+    private Image fondo;
     private Graphics dbg;       // Objeto grafico
     private SoundClip yay;    // Objeto AudioClip
     private SoundClip buuu;    // Objeto AudioClip
@@ -152,6 +153,10 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         addKeyListener(this);
         URL goURL = this.getClass().getResource("Imagenes/perder.png");
         gameover = Toolkit.getDefaultToolkit().getImage(goURL);
+        
+        URL fondoURL = this.getClass().getResource("Imagenes/fondo3.png");
+        fondo = Toolkit.getDefaultToolkit().createImage(fondoURL);
+        
        
         //Se cargan los sonidos.
         yay = new SoundClip("Sonidos/yay.wav");
@@ -758,6 +763,8 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         // Actualiza la imagen de fondo.
         dbg.setColor(getBackground());
         dbg.fillRect(0, 0, this.getSize().width, this.getSize().height);
+        
+        
  
         // Actualiza el Foreground.
         dbg.setColor(getForeground());
@@ -771,6 +778,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         if (vidas>0){
         if (pelota != null && barra != null && listaPotions != null && listaOsos != null && listaMeth != null ) {
             //Dibuja la imagen en la posicion actualizada
+            g.drawImage(fondo, 0, 0, null);
             g.drawImage(pelota.getImagenI(), pelota.getPosX(), pelota.getPosY(), this);
             g.drawImage(barra.getImagenI(), barra.getPosX(), barra.getPosY(), this);
             //g.drawImage(block2.getImagenI(), block2.getPosX(), block2.getPosY(), this);
