@@ -8,7 +8,7 @@ package breakingbad;
 
 /**
  *
- * @author santoscr92
+ * @author Santos Carrizales A01089851 && Antonio Miguel Menchaca A01190803
  */
 public class Breakingbad {
 

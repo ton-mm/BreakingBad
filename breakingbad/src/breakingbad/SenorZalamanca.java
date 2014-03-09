@@ -18,7 +18,8 @@ public class SenorZalamanca extends baseBlock {
 	 * Metodo constructor que hereda los atributos de la clase <code>Base</code>.
 	 * @param posX es la <code>posiscion en x</code> del objeto elefante.
 	 * @param posY es el <code>posiscion en y</code> del objeto elefante.
-	 * @param image es la <code>imagen</code> del objeto elefante.
+	 * @param image es la <code
+         * >imagen</code> del objeto elefante.
 	 */
          
         private static final String desaparece = "DESAPARECE";

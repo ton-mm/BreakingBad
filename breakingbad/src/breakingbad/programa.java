@@ -47,6 +47,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
     private SoundClip buuu;    // Objeto AudioClip
     private SoundClip bomb;    //Objeto AudioClip
     private SoundClip teleport;
+    private SoundClip intro;
     
     private buenoBlock pelota;    // Objeto de la clase buenoBlock
     private barraBlock barra;    //Objeto de la clase barraBlock
@@ -71,9 +72,9 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
     private int intentos;
     private int velocidadx,velocidady;
     private double gravedad = 9.8;
-    private double tiempo;
+    private double tiempo = 0,tiempomusica = 0;
     private boolean btiempo;
-    private boolean instrucciones = false;
+    private boolean instrucciones = true;
     private boolean inst = false;
     private boolean pclic = false;
     
@@ -163,6 +164,10 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         yay = new SoundClip("Sonidos/yay.wav");
         buuu = new SoundClip("Sonidos/buuu.wav");
         teleport = new SoundClip("Sonidos/teleport.wav");
+        intro = new SoundClip("Sonidos/intro.wav");
+        
+        
+        intro.play();
  
         elefante = new ImageIcon(Toolkit.getDefaultToolkit().getImage(eURL));
         ancho = elefante.getIconWidth();
@@ -387,6 +392,14 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
             
         }
         
+        //tiempo para refrescar musica
+        tiempomusica += 0.02;
+        if(tiempomusica % 75 == 0)
+        {
+            intro.play();
+        }
+        
+        
         // tiempo de jframe
         if(btiempo)
         {
@@ -480,6 +493,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
             pelota.setPosY(getHeight() - 150);
             clic = false;
             vidas--;
+            barra.setPosX(getWidth()/2);
         }
         
         //checa colision con la parte de arriba
@@ -885,11 +899,11 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
                 if (instrucciones ) {
                 
                g.setColor(Color.black);
-               g.drawString("INSTRUCCIONES: Para empezar el juego dar click a la pelota. Intenta cachar", 200, 200); 
+               g.drawString("INSTRUCCIONES: Para empezar el juego dar click a la pelota", 200, 200); 
                     g.drawString(    "la pelota con la barra. Mueve la barra con las flechas IZQ y DER", 200, 212); 
                      g.drawString(   "Para pausar el juego presiona 'p' ", 200, 225); 
-                     g.drawString(   "Para guardar el juego presiona 'g'", 200, 238); 
-                    g.drawString(    "Para cargar el juego presiona 'c'  ", 200, 250); 
+                     g.drawString(   "teclea I para quitar las instrucciones", 200, 238); 
+                    //g.drawString(    "Para cargar el juego presiona 'c'  ", 200, 250); 
             }
  
     }
