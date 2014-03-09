@@ -59,10 +59,11 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
     private int y1; // posicion del mouse en y
     private int x_pos;
     private int y_pos;
-    private int vidas = 1;
+    private int vidas = 2;
     private int score = 0;
     private boolean pausa = false;
     private boolean clic = false; //para saber cuando hace clic
+    private boolean space = false;
     private boolean up,down,right,left; //movimiento de teclado
     private boolean pchocox,pchocoy; // bool pelota choco
     private double angulo; // angulo de la pelota
@@ -328,9 +329,11 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         
         // block1.actualizaAnimacion(tiempoActual);
         
-        
+        if(vidas > 0) {
+            space = false;
+        }
          
-        if(vidas == 0)
+        if(vidas == 0 && space)
         {
             //lista.clear();
             listaPotions.clear();
@@ -380,7 +383,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         tortuga1 = new Tortuga( 800, 120);
         listaTortuga.addLast(tortuga1);
         
-        vidas ++;
+        vidas = 2;
             
         }
         
@@ -779,6 +782,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         if (pelota != null && barra != null && listaPotions != null && listaOsos != null && listaMeth != null ) {
             //Dibuja la imagen en la posicion actualizada
             g.drawImage(fondo, 0, 0, null);
+            
             g.drawImage(pelota.getImagenI(), pelota.getPosX(), pelota.getPosY(), this);
             g.drawImage(barra.getImagenI(), barra.getPosX(), barra.getPosY(), this);
             //g.drawImage(block2.getImagenI(), block2.getPosX(), block2.getPosY(), this);
@@ -838,6 +842,7 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
             Tortuga tortuga1 = (Tortuga) listaTortuga.get(i);
             g.drawImage(tortuga1.getImagenI(), tortuga1.getPosX(), tortuga1.getPosY(), this);
         }
+            g.drawImage(barra.getImagenI(), barra.getPosX(), barra.getPosY(), this);
           
             
             
@@ -848,11 +853,12 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
         }
         }
         else{
-            g.drawImage(gameover, 400, 150, this);
+            g.drawImage(gameover, 0, 0, null);
+            
         }
    
         //
-        g.drawImage(barra.getImagenI(), barra.getPosX(), barra.getPosY(), this);
+        
         
      /*
         for (int i = 0; i < lista.size(); i++) {
@@ -975,6 +981,13 @@ public class programa extends JFrame implements Runnable, KeyListener,MouseListe
             instrucciones = !instrucciones;
             //pausa = !pausa;
         }
+        
+        if (e.getKeyCode() == KeyEvent.VK_SPACE && vidas == 0) //Presiono tecla I
+        {    
+            space = true;
+            //pausa = !pausa;
+        }
+        
  /*       
         if (e.getKeyCode() == KeyEvent.VK_G) //Presiono tecla G
         {  
